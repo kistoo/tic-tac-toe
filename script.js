@@ -103,6 +103,37 @@ const board = (()=>{
 
 })();
 
+const form = (() => {
+    const checkFields = () => {
+        //check select
+        if (select.value!==""){
+            collectData();
+        }
+    }
+    const collectData = () => {
+        const gamemode = select.value;
+        const player1 = inputs[0].value;
+        const player2 = inputs[1].value;
+        return {gamemode,player1,player2}
+    }
+    const checkMode = () => {
+        const player2Name = document.getElementsByClassName('player-2')[0];
+        if (select.value==="local") {
+            player2Name.style.display = "flex";
+        } else {
+            player2Name.style.display = "none";
+        }
+    }
+    
+    const select = document.getElementById('mode');
+    select.addEventListener('change',()=>checkMode());
+    const inputs = document.querySelectorAll('input');
+    const button = document.querySelector('button');
+    button.addEventListener('click',()=>checkFields());
+    
+})();
+
+
 const playerFactory = () => {
     const play = () =>{};
 }
