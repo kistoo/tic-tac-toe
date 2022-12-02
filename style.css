@@ -60,6 +60,7 @@ table {
     --background-color: #ccfbf1;
     --board-color: #0f766e;
     --border-color: #a16207;
+    --font-color: #134e4a;
 }
 
 body {
@@ -75,6 +76,7 @@ body {
 #game h1 {
     font-size: 80px;
     font-family: 'Nerko One', cursive;
+    color: var(--font-color);
 }
 
 #board {
