@@ -25,29 +25,30 @@ const board = (()=>{
     //checks if there is a winner
     const checkCells = () => {
         const values = getValues();
-        for(let i = 0;i++;i<3) {
+        console.log(values);
+        for(let i=0;i<3;i++) {
             //for columns
-            if( values[i]=== values[i+3]
-            && values[i+3]===values[i+6]
-            && values[i]!==null) {
-                winner = values[i];
-                break;
+            if(values[i]===values[i+3]
+                && values[i+3]===values[i+6]
+                && values[i]!==null) {
+                    winner = values[i];
+                    break;
             }
             //for rows
             if(values[i*3]===values[i*3+1] &&
-            values[i*3+1]===values[i*3+2] &&
-            values[i*3]!==null) {
-                winner = values[i];
-                break;
+                values[i*3+1]===values[i*3+2] &&
+                values[i*3]!==null) {
+                    winner = values[i*3];
+                    break;
             }
         }
         //for diagonals
         if (((values[0]===values[4]
-        && values[4]===values[8])
-        || (values[2]===values[4]
-        && values[4]=== values[6]))
-        && values[4] !== null) {
-            winner = values[i];
+            && values[4]===values[8])
+            || (values[2]===values[4]
+            && values[4]===values[6]))
+            && values[4]!==null) {
+                winner = values[4];
         }
     };
     //returns array with cell values
