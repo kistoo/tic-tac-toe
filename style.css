@@ -55,14 +55,15 @@ table {
 }
 
 /*fonts*/
-@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Roboto&display=swap');
 
 body {
     font-family: 'Roboto', sans-serif;
 }
 
 #game h1 {
-    font-family: 'Monoton', cursive;
+    font-family: 'Righteous', 'Verdana', cursive;
+    font-size: 50px;
 }
 
 #board {
@@ -94,10 +95,6 @@ body {
 /*selects bottom side cells*/
 #board>div:nth-child(n+7) {
     border-bottom: none;
-}
-
-h1 {
-    font-size: 50px;
 }
 
 img {
