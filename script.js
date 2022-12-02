@@ -1,12 +1,21 @@
 const board = (()=>{
-    //ends and set everything to default
+    //ends game
     const endGame = () => {
-        const announcement = document.getElementById('end-game');
-        const img = document.createElement('img');
         announcement.querySelectorAll('h1')[0].textContent = `${winner} wins!`;
         announcement.style.display= "flex";
         announcement.className = "win";
+        //reset
+        announcement.addEventListener('click',()=>reset());
     }
+    //clears everything
+    const reset = () => {
+        announcement.style.display="none";
+        winner="";
+        board.forEach(cell=>{
+            cell.innerHTML="";
+        })
+    }
+
     //plays round
     const playRound = (cell) => {
         playTurn(cell);
@@ -89,7 +98,8 @@ const board = (()=>{
     cells.forEach(cell => {
         cell.addEventListener('click',()=>playRound(cell));
     });
-
+    //announcement div
+    const announcement = document.getElementById('end-game');
 
 })();
 
