@@ -1,5 +1,12 @@
 const board = (()=>{
-
+    //plays round
+    const playRound = (cell) => {
+        playTurn(cell);
+        checkCells();
+        if (winner==="X"){
+            console.log("nice")
+        }
+    }
     //add X and O images
     const playTurn = (cell) => {
         if (cell.firstChild === null) {
@@ -36,10 +43,11 @@ const board = (()=>{
             }
         }
         //for diagonals
-        if ((cells[0].firstChild.src===cells[4].firstChild.src
+        if (((cells[0].firstChild.src===cells[4].firstChild.src
             && cells[4].firstChild.src===cells[8].firstChild.src)
             || (cells[2].firstChild.src===cells[4].firstChild.src
-            && cells[4].firstChild.src === cells[6].firstChild.src)) {
+            && cells[4].firstChild.src === cells[6].firstChild.src))
+            && cells[4].firstChild.src !== null) {
                 getWinner(cells[4].firstChild.src);
         }
     };
@@ -62,7 +70,7 @@ const board = (()=>{
     const board = document.getElementById("board").querySelectorAll('div');
     const cells = Array.from(board);
     cells.forEach(cell => {
-        cell.addEventListener('click',()=>playTurn(cell));
+        cell.addEventListener('click',()=>playRound(cell));
     });
 
 
