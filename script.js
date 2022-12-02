@@ -2,6 +2,7 @@ const board = (()=>{
     //ends and set everything to default
     const endGame = () => {
         const announcement = document.getElementById('end-game');
+        const img = document.createElement('img');
         announcement.querySelectorAll('h1')[0].textContent = `${winner} wins!`;
         announcement.style.display= "flex";
         announcement.className = "win";
@@ -14,16 +15,16 @@ const board = (()=>{
             endGame();
         }
     }
-    //add X and O images
+    //add x and o images
     const playTurn = (cell) => {
         if (cell.firstChild === null) {
             const img = document.createElement('img');
-            if (turn === "X") {
+            if (turn === "x") {
                 img.src = "images/X.svg";
-                turn = "O"
-            } else if (turn === "O") {
+                turn = "o"
+            } else if (turn === "o") {
                 img.src = "images/O.svg";
-                turn = "X";
+                turn = "x";
             }
             cell.appendChild(img);
         }
@@ -68,9 +69,9 @@ const board = (()=>{
             if (cell.firstChild === null) {
                 values.push(null);
             } else if (cell.firstChild.src.includes("images/X.svg")) {
-                values.push("X");
+                values.push("x");
             } else if (cell.firstChild.src.includes("images/O.svg")) {
-                values.push("O");
+                values.push("o");
             }
         });
         return values;
@@ -80,7 +81,7 @@ const board = (()=>{
     let winner = "";
     
     //turn
-    let turn = "X";
+    let turn = "x";
 
     //selects board divs
     const board = document.getElementById("board").querySelectorAll('div');
