@@ -129,7 +129,7 @@ label {
 #game {
     top: 0;
     left: 0;
-    display: none;
+    display: none;/*flex*/
     flex-direction: column;
     align-items: center;
     gap: 40px;
@@ -200,14 +200,14 @@ h1 {
     font-family: 'Nerko One', cursive;
 }
 
-.lose {
+.lose h1{
     color: var(--lose-color);
 }
 
-.win {
+.win h1{
     color: var(--win-color);
 }
 
-.tie {
+.tie h1{
     color: var(--tie-color);
 }
