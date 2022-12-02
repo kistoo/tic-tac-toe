@@ -13,7 +13,19 @@
 <body>
     <h1>Tic tac toe</h1>
     <div id="gamemode">
-        
+        <label for="mode">Gamemode</label>
+        <select name="mode" id="mode">
+            <option value="" disabled selected>Select gamemode</option>
+            <option value="local">Local</option>
+            <option value="ai">AI</option>
+        </select>
+        <label for="player-1">Player 1</label>
+        <input type="text" name="player-1" id="player-1" placeholder="Player 1">
+        <div class="player-2">
+            <label for="player-2">Player 2</label>
+            <input type="text" name="player-2" id="player-2" placeholder="Player 2">
+        </div>
+        <button type="submit">Start game</button>
     </div>
 
     <div id="game">
