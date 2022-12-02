@@ -54,16 +54,11 @@ table {
   box-sizing: border-box;
 }
 
-/*fonts*/
-@import url('https://fonts.googleapis.com/css2?family=Righteous&family=Roboto&display=swap');
-
-body {
-    font-family: 'Roboto', sans-serif;
-}
+/*style*/
 
 #game h1 {
-    font-family: 'Righteous', 'Verdana', cursive;
-    font-size: 50px;
+    font-size: 80px;
+    font-family: 'Nerko One', cursive;
 }
 
 #board {
