@@ -24,40 +24,45 @@ const board = (()=>{
 
     //checks if there is a winner
     const checkCells = () => {
+        const values = getValues();
         for(let i = 0;i++;i<3) {
             //for columns
-            let row1 = cells[i].firstChild.src;
-            let row2 = cells[i+3].firstChild.src;
-            let row3 = cells[i+6].firstChild.src;
-            if(row1===row2 && row2===row3 && row1!==null) {
-                getWinner(row1);
+            if( values[i]=== values[i+3]
+            && values[i+3]===values[i+6]
+            && values[i]!==null) {
+                winner = values[i];
                 break;
             }
             //for rows
-            let col1 = cells[i*3].firstChild.src;
-            let col2 = cells[i*3+1].firstChild.src;
-            let col3 = cells[i*3+2].firstChild.src;
-            if(col1===col2 && col2===col3 && col1!==null) {
-                getWinner(col1);
+            if(values[i*3]===values[i*3+1] &&
+            values[i*3+1]===values[i*3+2] &&
+            values[i*3]!==null) {
+                winner = values[i];
                 break;
             }
         }
         //for diagonals
-        if (((cells[0].firstChild.src===cells[4].firstChild.src
-            && cells[4].firstChild.src===cells[8].firstChild.src)
-            || (cells[2].firstChild.src===cells[4].firstChild.src
-            && cells[4].firstChild.src === cells[6].firstChild.src))
-            && cells[4].firstChild.src !== null) {
-                getWinner(cells[4].firstChild.src);
+        if (((values[0]===values[4]
+        && values[4]===values[8])
+        || (values[2]===values[4]
+        && values[4]=== values[6]))
+        && values[4] !== null) {
+            winner = values[i];
         }
     };
-    //returns O or X based on winner
-    const getWinner = (text) => {
-        if (text.includes("images/X.svg")) {
-            winner = "X";
-        } else if (text.includes("images/O.svg")) {
-            winner = "O"
-        }
+    //returns array with cell values
+    const getValues = (text) => {
+        const values = [];
+        cells.forEach(cell => {
+            if (cell.firstChild === null) {
+                values.push(null);
+            } else if (cell.firstChild.src.includes("images/X.svg")) {
+                values.push("X");
+            } else if (cell.firstChild.src.includes("images/O.svg")) {
+                values.push("O");
+            }
+        });
+        return values;
     }
 
     //winner
