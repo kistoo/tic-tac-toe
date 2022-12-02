@@ -57,6 +57,14 @@ table {
 /*fonts*/
 @import url('https://fonts.googleapis.com/css2?family=Monoton&family=Roboto&display=swap');
 
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+#game h1 {
+    font-family: 'Monoton', cursive;
+}
+
 #board {
     display: grid;
     grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;   
