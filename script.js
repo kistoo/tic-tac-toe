@@ -1,10 +1,17 @@
 const board = (()=>{
+    //ends and set everything to default
+    const endGame = () => {
+        const announcement = document.getElementById('end-game');
+        announcement.querySelectorAll('h1')[0].textContent = `${winner} wins!`;
+        announcement.style.display= "flex";
+        announcement.className = "win";
+    }
     //plays round
     const playRound = (cell) => {
         playTurn(cell);
         checkCells();
-        if (winner==="X"){
-            console.log("nice")
+        if (winner!=="") {
+            endGame();
         }
     }
     //add X and O images
@@ -25,7 +32,6 @@ const board = (()=>{
     //checks if there is a winner
     const checkCells = () => {
         const values = getValues();
-        console.log(values);
         for(let i=0;i<3;i++) {
             //for columns
             if(values[i]===values[i+3]
@@ -49,6 +55,10 @@ const board = (()=>{
             && values[4]===values[6]))
             && values[4]!==null) {
                 winner = values[4];
+        }
+        //checks for empty cells
+        if (values.indexOf(null)===-1) {
+            endGame();
         }
     };
     //returns array with cell values
