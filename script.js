@@ -115,7 +115,7 @@ const form = (() => {
     const checkFields = () => {
         //check select
         if (select.value!==""){
-            stats(collectData());
+            stats.getInfo(collectData());
             showGame();
         }
     }
@@ -165,10 +165,13 @@ const playerFactory = (name,team="o") => {
     return {name,wins,ties,loses,team}
 }
 
-const stats = (info) => {
-    let player1,player2,gamemode;
-    player1 = playerFactory(info.player1,"x");
-    player2 = playerFactory(info.player2);
-    gamemode = info.gamemode
-    console.log(player1,player2,gamemode)
-}
+const stats = (() => {
+    const getInfo = (info) => {
+        let player1,player2,gamemode;
+        player1 = playerFactory(info.player1,"x");
+        player2 = playerFactory(info.player2);
+        gamemode = info.gamemode
+        console.log(player1,player2,gamemode);
+    }
+    return {getInfo}
+})();
