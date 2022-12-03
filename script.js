@@ -1,9 +1,15 @@
 const board = (()=>{
     //ends game
     const endGame = () => {
-        announcement.querySelectorAll('h1')[0].textContent = `${winner} wins!`;
         announcement.style.display= "flex";
-        announcement.className = "win";
+        if (winner!=="tie"){
+            announcement.querySelectorAll('h1')[0].textContent = `${winner} wins!`;
+            announcement.className = "win";
+        } else {
+            announcement.querySelectorAll('h1')[0].textContent = "It's a tie";
+            announcement.className = "tie";
+        }
+        
         //reset
         announcement.addEventListener('click',()=>reset());
     }
@@ -42,6 +48,12 @@ const board = (()=>{
     //checks if there is a winner
     const checkCells = () => {
         const values = getValues();
+        //checks for empty cells
+        if (values.indexOf(null)===-1) {
+            winner="tie";
+            endGame();
+        }
+        //checks winner
         for(let i=0;i<3;i++) {
             //for columns
             if(values[i]===values[i+3]
@@ -65,10 +77,6 @@ const board = (()=>{
             && values[4]===values[6]))
             && values[4]!==null) {
                 winner = values[4];
-        }
-        //checks for empty cells
-        if (values.indexOf(null)===-1) {
-            endGame();
         }
     };
     //returns array with cell values
