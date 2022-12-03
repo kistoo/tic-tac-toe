@@ -9,6 +9,7 @@ const board = (()=>{
             announcement.querySelectorAll('h1')[0].textContent = "It's a tie";
             announcement.className = "tie";
         }
+        info.setResult("win");
         stats.refreshStats();
         //reset
         announcement.addEventListener('click',()=>reset());
@@ -51,7 +52,6 @@ const board = (()=>{
         //checks for empty cells
         if (values.indexOf(null)===-1) {
             winner="tie";
-            endGame();
         }
         //checks winner
         for(let i=0;i<3;i++) {
@@ -160,7 +160,7 @@ const form = (() => {
 
 const stats = (() => {
     const refreshStats = () => {
-        const newInfo = info.getInfo()
+        const newInfo = info.getInfo();
         gamemode.textContent = newInfo.gamemode;
         player1name.textContent = `${newInfo.player1.name} stats:`;
         player1stats.textContent = `${newInfo.player1.wins}W ${newInfo.player1.ties}T ${newInfo.player1.loses}L`
@@ -188,8 +188,21 @@ const info = (() => {
     const getInfo = () => {
         return {gamemode,player1,player2}
     }
+    const setResult = (result) => {
+        switch (result) {
+            case "tie":
+                player1.ties++;
+                player2.ties++;
+            case "win":
+                player1.wins++;
+                player2.loses++;
+            case "lose":
+                player1.loses++;
+                player2.wins++;
+        }
+    }
     let gamemode,player1,player2;
-    return {createInfo,getInfo}
+    return {createInfo,getInfo,setResult}
 })();
 
 const playerFactory = (name,team="o") => {
