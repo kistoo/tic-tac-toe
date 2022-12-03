@@ -171,6 +171,9 @@ const stats = (() => {
         player2 = playerFactory(info.player2);
         gamemode = info.gamemode;
     }
-    let player1,player2,gamemode;
-    return {createInfo}
+    const getInfo = () => {
+        return {gamemode,player1,player2}
+    }
+    let gamemode,player1,player2;
+    return {createInfo,getInfo}
 })();
