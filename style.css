@@ -61,6 +61,7 @@ table {
     --primary-color: #0f766e;
     --secondary-color: #a16207;
     --font-color: #134e4a;
+    --secondary-font-color: #fde68a;
     --lose-color: #dc2626;
     --win-color: #16a34a;
     --tie-color: #d97706;
@@ -87,7 +88,6 @@ input, select, option {
     height: 40px;
     border-radius: 5px;
     border: none;
-    box-shadow: 0 0 0 2px var(--secondary-background-color);
     transition: 200ms box-shadow ease-in-out;
     font-size: 26px;  
     background-color: #fde68a;
@@ -120,7 +120,7 @@ label {
 }
 
 .player-2 {
-    display: none;/*flex*/
+    display: flex;/*flex*/
     flex-direction: column;
     gap: 10px;
 }
@@ -177,6 +177,30 @@ h1 {
 #board img {
     filter: invert(97%) sepia(97%) saturate(0%) hue-rotate(54deg) brightness(104%) contrast(103%);
     height: 100px;
+}
+
+#stats {
+    position:absolute;
+    margin-right: 1000px;
+    height: 600px;
+    width: 300px;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 5px;
+    border: 20px groove var(--secondary-color);
+}
+
+h2 {
+    font-size: 38px;
+    font-family: 'Nerko One', cursive;
+    font-weight: 200;
+    color: var(--secondary-font-color);
+}
+
+#stats h2:nth-child(2n-1) {
+    margin-top: 25px;
 }
 
 #end-game {
