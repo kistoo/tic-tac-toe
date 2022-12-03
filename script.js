@@ -167,11 +167,10 @@ const playerFactory = (name,team="o") => {
 
 const stats = (() => {
     const createInfo = (info) => {
-        let player1,player2,gamemode;
         player1 = playerFactory(info.player1,"x");
         player2 = playerFactory(info.player2);
-        gamemode = info.gamemode
-        console.log(player1,player2,gamemode);
+        gamemode = info.gamemode;
     }
-    return {getInfo}
+    let player1,player2,gamemode;
+    return {createInfo}
 })();
