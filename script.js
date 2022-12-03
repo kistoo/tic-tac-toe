@@ -108,12 +108,25 @@ const form = (() => {
         //check select
         if (select.value!==""){
             collectData();
+            showGame();
         }
+    }
+    const showGame = () => {
+        const form = document.getElementById('gamemode');
+        const game = document.getElementById('game');
+        form.style.display="none";
+        game.style.display="flex";
     }
     const collectData = () => {
         const gamemode = select.value;
-        const player1 = inputs[0].value;
-        const player2 = inputs[1].value;
+        let player1 = inputs[0].value;
+        if (player1 === "") {
+            player1 = "Player 1";
+        }
+        let player2 = inputs[1].value;
+        if (player2 === "") {
+            player2 = "Player 2";
+        }
         return {gamemode,player1,player2}
     }
     const checkMode = () => {
