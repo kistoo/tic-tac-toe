@@ -158,6 +158,7 @@ const form = (() => {
 
 })();
 
+
 const playerFactory = (name,team="o") => {
     let wins = 0;
     let ties = 0;
@@ -165,7 +166,7 @@ const playerFactory = (name,team="o") => {
     return {name,wins,ties,loses,team}
 }
 
-const stats = (() => {
+const info = (() => {
     const createInfo = (info) => {
         player1 = playerFactory(info.player1,"x");
         player2 = playerFactory(info.player2);
