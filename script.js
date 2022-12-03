@@ -115,9 +115,8 @@ const form = (() => {
     const checkFields = () => {
         //check select
         if (select.value!==""){
-            collectData();
+            stats(collectData());
             showGame();
-            createPlayers();
         }
     }
     const showGame = () => {
@@ -132,10 +131,14 @@ const form = (() => {
         if (player1 === "") {
             player1 = "Player 1";
         }
-        let player2 = inputs[1].value;
-        if (player2 === "") {
-            player2 = "Player 2";
+        let player2 = "AI"
+        if (gamemode === "local"){
+            player2 = inputs[1].value;
+            if (player2 === "") {
+                player2 = "Player 2";
+            }
         }
+        
         return {gamemode,player1,player2}
     }
     const checkMode = () => {
@@ -146,23 +149,12 @@ const form = (() => {
             player2Name.style.display = "none";
         }
     }
-    
-    const createPlayers = () => {
-        player1 = playerFactory(collectData().player1,"x");
-        player2 = playerFactory("AI");
-        if (collectData().gamemode === "local") {
-            player2 = playerFactory(collectData().player2);   
-        }
-    }
 
-    let player1,player2;
     const button = document.querySelector('button');
     button.addEventListener('click',()=>checkFields());
     const select = document.getElementById('mode');
     select.addEventListener('change',()=>checkMode());
     const inputs = document.querySelectorAll('input');
-    
-    return {collectData,checkFields}
 
 })();
 
@@ -171,4 +163,12 @@ const playerFactory = (name,team="o") => {
     let ties = 0;
     let loses = 0;
     return {name,wins,ties,loses,team}
+}
+
+const stats = (info) => {
+    let player1,player2,gamemode;
+    player1 = playerFactory(info.player1,"x");
+    player2 = playerFactory(info.player2);
+    gamemode = info.gamemode
+    console.log(player1,player2,gamemode)
 }
