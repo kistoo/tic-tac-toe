@@ -9,7 +9,7 @@ const board = (()=>{
             announcement.querySelectorAll('h1')[0].textContent = "It's a tie";
             announcement.className = "tie";
         }
-        
+        stats.refreshStats();
         //reset
         announcement.addEventListener('click',()=>reset());
     }
@@ -115,7 +115,7 @@ const form = (() => {
     const checkFields = () => {
         //check select
         if (select.value!==""){
-            stats.createInfo(collectData());
+            info.createInfo(collectData());
             showGame();
         }
     }
@@ -132,7 +132,7 @@ const form = (() => {
             player1 = "Player 1";
         }
         let player2 = "AI"
-        if (gamemode === "local"){
+        if (gamemode === "Local"){
             player2 = inputs[1].value;
             if (player2 === "") {
                 player2 = "Player 2";
@@ -143,7 +143,7 @@ const form = (() => {
     }
     const checkMode = () => {
         const player2Name = document.getElementsByClassName('player-2')[0];
-        if (select.value==="local") {
+        if (select.value==="Local") {
             player2Name.style.display = "flex";
         } else {
             player2Name.style.display = "none";
@@ -158,19 +158,32 @@ const form = (() => {
 
 })();
 
+const stats = (() => {
+    const refreshStats = () => {
+        const newInfo = info.getInfo()
+        gamemode.textContent = newInfo.gamemode;
+        player1name.textContent = `${newInfo.player1.name} stats:`;
+        player1stats.textContent = `${newInfo.player1.wins}W ${newInfo.player1.ties}T ${newInfo.player1.loses}L`
+        player2name.textContent = `${newInfo.player2.name} stats:`;
+        player2stats.textContent = `${newInfo.player2.wins}W ${newInfo.player2.ties}T ${newInfo.player2.loses}L`
+    }
 
-const playerFactory = (name,team="o") => {
-    let wins = 0;
-    let ties = 0;
-    let loses = 0;
-    return {name,wins,ties,loses,team}
-}
+    const gamemode = document.getElementsByClassName('gamemode')[0];
+    const player1name = document.getElementsByClassName('player-1')[0];
+    const player1stats = document.getElementsByClassName('player-1')[1];
+    const player2name = document.getElementsByClassName('player-2')[1];
+    const player2stats = document.getElementsByClassName('player-2')[2];
+
+    return {refreshStats}
+
+})();
 
 const info = (() => {
     const createInfo = (info) => {
         player1 = playerFactory(info.player1,"x");
         player2 = playerFactory(info.player2);
         gamemode = info.gamemode;
+        stats.refreshStats();
     }
     const getInfo = () => {
         return {gamemode,player1,player2}
@@ -178,3 +191,10 @@ const info = (() => {
     let gamemode,player1,player2;
     return {createInfo,getInfo}
 })();
+
+const playerFactory = (name,team="o") => {
+    let wins = 0;
+    let ties = 0;
+    let loses = 0;
+    return {name,wins,ties,loses,team}
+}
