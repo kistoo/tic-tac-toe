@@ -37,12 +37,14 @@ const board = (()=>{
             const img = document.createElement('img');
             if (turn === "x") {
                 img.src = "images/X.svg";
-                turn = "o"
+                turn = "o";
             } else if (turn === "o") {
                 img.src = "images/O.svg";
                 turn = "x";
             }
             cell.appendChild(img);
+            info.changeTurn(turn);
+            stats.refreshStats();
         }
     };
 
@@ -162,6 +164,7 @@ const stats = (() => {
     const refreshStats = () => {
         const newInfo = info.getInfo();
         gamemode.textContent = newInfo.gamemode;
+        turn.textContent = newInfo.turn;
         player1name.textContent = `${newInfo.player1.name} stats:`;
         player1stats.textContent = `${newInfo.player1.wins}W ${newInfo.player1.ties}T ${newInfo.player1.loses}L`
         player2name.textContent = `${newInfo.player2.name} stats:`;
@@ -169,6 +172,7 @@ const stats = (() => {
     }
 
     const gamemode = document.getElementsByClassName('gamemode')[0];
+    const turn = document.getElementsByClassName('turn')[0];
     const player1name = document.getElementsByClassName('player-1')[0];
     const player1stats = document.getElementsByClassName('player-1')[1];
     const player2name = document.getElementsByClassName('player-2')[1];
@@ -186,7 +190,18 @@ const info = (() => {
         stats.refreshStats();
     }
     const getInfo = () => {
-        return {gamemode,player1,player2}
+        //First play
+        if (turn === undefined) {
+            turn = player1.name;
+        }
+        return {gamemode,player1,player2,turn}
+    }
+    const changeTurn = (boardTurn) => {
+        if (player1.team===boardTurn) {
+            turn = player1.name;
+        } else {
+            turn = player2.name;
+        }
     }
     const setResult = (result) => {
         switch (result) {
@@ -201,8 +216,8 @@ const info = (() => {
                 player2.wins++;
         }
     }
-    let gamemode,player1,player2;
-    return {createInfo,getInfo,setResult}
+    let gamemode,player1,player2,turn;
+    return {createInfo,getInfo,setResult,changeTurn}
 })();
 
 const playerFactory = (name,team="o") => {
