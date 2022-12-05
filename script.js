@@ -82,7 +82,7 @@ const board = (()=>{
         }
     };
     //returns array with cell values
-    const getValues = (text) => {
+    const getValues = () => {
         const values = [];
         cells.forEach(cell => {
             if (cell.firstChild === null) {
