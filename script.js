@@ -30,8 +30,12 @@ const board = (()=>{
         if (winner!=="") {
             endGame();
         }
+        if (info.getInfo().gamemode==="AI") {
+            console.log("yay")
+            AI.AIplay("easy",getValues())
+        }
     }
-    //add x and o images
+    //add x and o imagescell
     const playTurn = (cell) => {
         if (cell.firstChild === null) {
             const img = document.createElement('img');
@@ -218,6 +222,32 @@ const info = (() => {
     }
     let gamemode,player1,player2,turn;
     return {createInfo,getInfo,setResult,changeTurn}
+})();
+
+const AI = (() => {
+    const AIplay = (level,board) => {
+        switch (level) {
+            case "easy":
+                return randomPlay(board);
+        }
+    };
+
+    //AI plays
+    const randomPlay = (board) => {
+        const randomNumber = Math.floor(Math.random()*9);
+        let cell,i=0;
+        while (true) {
+            if (board[randomNumber]===null) {
+                cell = board[randomNumber+i];
+                break;
+            }
+            i++;
+        }
+        console.log(cell)
+        return cell;
+    }
+
+    return {AIplay}
 })();
 
 const playerFactory = (name,team="o") => {
