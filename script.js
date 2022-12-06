@@ -12,7 +12,7 @@ const board = (()=>{
         info.setResult("win");
         stats.refreshStats();
         //reset
-        announcement.addEventListener('click',()=>reset());
+        announcement.addEventListener('click',reset);
     }
     //clears everything
     const reset = () => {
@@ -21,18 +21,27 @@ const board = (()=>{
         board.forEach(cell=>{
             cell.innerHTML="";
         })
+        //makes first ia turn
+        if (info.getInfo().gamemode==="AI" && turn === "o") {
+            playTurn(cells[ AI.AIplay("easy",getValues())]);
+        }
     }
 
     //plays round
     const playRound = (cell) => {
-        playTurn(cell);
-        checkCells();
-        if (winner!=="") {
-            endGame();
-        }
-        if (info.getInfo().gamemode==="AI") {
-            console.log("yay")
-            AI.AIplay("easy",getValues())
+        if (info.getInfo().gamemode==="Local") {
+            playTurn(cell);
+            checkCells();
+        } else if (info.getInfo().gamemode==="AI") {
+            if (turn === "x") {
+                if (playTurn(cell)) {
+                    let AIturn = checkCells();
+                    if (AIturn) {
+                        playTurn(cells[AI.AIplay("easy",getValues())]);
+                        checkCells();
+                    }   
+                }        
+            }
         }
     }
     //add x and o imagescell
@@ -49,6 +58,7 @@ const board = (()=>{
             cell.appendChild(img);
             info.changeTurn(turn);
             stats.refreshStats();
+            return true;
         }
     };
 
@@ -83,6 +93,13 @@ const board = (()=>{
             && values[4]===values[6]))
             && values[4]!==null) {
                 winner = values[4];
+        }
+        //endgame if there is a winner
+        if (winner!=="") {
+            endGame();
+            return false;
+        } else { 
+            return true;
         }
     };
     //returns array with cell values
@@ -234,17 +251,22 @@ const AI = (() => {
 
     //AI plays
     const randomPlay = (board) => {
-        const randomNumber = Math.floor(Math.random()*9);
-        let cell,i=0;
+        let randomNumber = Math.floor(Math.random()*9);
+        let i=0;
         while (true) {
-            if (board[randomNumber]===null) {
-                cell = board[randomNumber+i];
+            if (board[randomNumber+i]===null) {
                 break;
             }
+            if (randomNumber+i>8) {
+                randomNumber = 0;
+                i = 0;
+            }
             i++;
+            if (i===7) {
+                break;
+            }
         }
-        console.log(cell)
-        return cell;
+        return (randomNumber+i);
     }
 
     return {AIplay}
