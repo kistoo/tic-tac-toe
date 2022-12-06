@@ -7,10 +7,8 @@ const board = (()=>{
             announcement.className = "win";
             if (winner === "x") {
                 info.setResult("win");
-                console.log("HUMAN WIN")
             } else {
                 info.setResult("lose");
-                console.log("AI WIN");
             }
         } else {
             announcement.querySelectorAll('h1')[0].textContent = "It's a tie";
@@ -30,7 +28,7 @@ const board = (()=>{
         })
         //makes first ia turn
         if (info.getInfo().gamemode==="AI" && turn === "o") {
-            playTurn(cells[ AI.AIplay("easy",getValues())]);
+            playTurn(cells[AI.AIplay(info.getInfo().difficulty,getValues())]);
         }
     }
 
@@ -44,7 +42,7 @@ const board = (()=>{
                 if (playTurn(cell)) {
                     let AIturn = checkCells();
                     if (AIturn) {
-                        playTurn(cells[AI.AIplay("medium",getValues())]);
+                        playTurn(cells[AI.AIplay(info.getInfo().difficulty,getValues())]);
                         checkCells();
                     }   
                 }        
@@ -232,6 +230,9 @@ const info = (() => {
         player1 = playerFactory(info.player1,"x");
         player2 = playerFactory(info.player2);
         gamemode = info.gamemode;
+        if (gamemode === "AI") {
+            difficulty = player2.name.split(' ')[1];
+        }
         stats.refreshStats();
     }
     const getInfo = () => {
@@ -239,10 +240,10 @@ const info = (() => {
         if (turn === undefined) {
             turn = player1.name;
         }
-        return {gamemode,player1,player2,turn}
+        return {gamemode,player1,player2,turn,difficulty}
     }
     const changeTurn = (boardTurn) => {
-        if (player1.team===boardTurn) {
+        if (player1.team === boardTurn) {
             turn = player1.name;
         } else {
             turn = player2.name;
@@ -264,7 +265,7 @@ const info = (() => {
                 break;
         }
     }
-    let gamemode,player1,player2,turn;
+    let gamemode,player1,player2,turn,difficulty;
     return {createInfo,getInfo,setResult,changeTurn}
 })();
 
@@ -278,13 +279,16 @@ const AI = (() => {
             case "medium":
                 bestPlay = randomPlay(board);
                 betterPlay = counterWinPlay(board);
+                console.log(betterPlay,"counterwin")
                 if (betterPlay!=="not found") {
                     bestPlay = betterPlay;
                 }
                 betterPlay = winPlay(board);
+                console.log(betterPlay,"winplay")
                 if (betterPlay!=="not found") {
                     bestPlay = betterPlay;
                 }
+                console.log(bestPlay,"lastplay")
                 break;
 
         }
