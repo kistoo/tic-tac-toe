@@ -119,7 +119,7 @@ label {
     color: var(--font-color);
 }
 
-.player-2 {
+.player-2, .difficulty {
     display: flex;/*flex*/
     flex-direction: column;
     gap: 10px;
