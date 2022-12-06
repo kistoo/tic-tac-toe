@@ -407,6 +407,10 @@ const AI = (() => {
             (board.indexOf("x") === 1 || board.indexOf("x") === 5)) {
                 return 6;
             }
+            // #counter 3
+            if (board[4] === null) {
+                return 4;
+            }
         }
         return "not found";
     }
