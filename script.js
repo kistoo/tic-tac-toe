@@ -262,6 +262,10 @@ const AI = (() => {
         switch (level) {
             case "easy":
                 bestPlay = randomPlay(board);
+                betterPlay = counterWinPlay(board);
+                if (betterPlay!=="not found") {
+                    bestPlay = betterPlay;
+                }
                 betterPlay = winPlay(board);
                 if (betterPlay!=="not found") {
                     bestPlay = betterPlay;
@@ -315,6 +319,38 @@ const AI = (() => {
                     case (board[0]===board[4] && board[4]===board[8] && (board[0] === "o")):
                         return i;
                     case (board[2]===board[4] && board[4]===board[6] && (board[2] === "o")):
+                        return i;
+                }
+            }
+            board[i] = tempCell;
+        }
+        return "not found";
+    }
+    const counterWinPlay = (board) => {
+        for(let i=0;i<9;i++) {
+            let tempCell = board[i];  
+            if (board[i] === null) {
+                board[i] = "x";
+                //checks winner
+                switch (true) {
+                    //rows
+                    case (board[0]===board[1] && board[1]===board[2] && (board[0] === "x")):
+                        return i;
+                    case (board[3]===board[4] && board[4]===board[5] && (board[3] === "x")):
+                        return i;
+                    case (board[6]===board[7] && board[7]===board[8] && (board[6] === "x")):
+                        return i;
+                    //columns
+                    case (board[0]===board[3] && board[3]===board[6] && (board[0] === "x")):
+                        return i;
+                    case (board[1]===board[4] && board[4]===board[7] && (board[1] === "x")):
+                        return i;
+                    case (board[2]===board[5] && board[5]===board[8] && (board[2] === "x")):
+                        return i;
+                    //diagonals
+                    case (board[0]===board[4] && board[4]===board[8] && (board[0] === "x")):
+                        return i;
+                    case (board[2]===board[4] && board[4]===board[6] && (board[2] === "x")):
                         return i;
                 }
             }
