@@ -271,26 +271,21 @@ const info = (() => {
 
 const AI = (() => {
     const AIplay = (level,board) => {
-        let bestPlay,betterPlay;
+        let bestPlay = "not found";
         switch (level) {
-            case "easy":
-                bestPlay = randomPlay(board);
-                break;
-            case "medium":
-                bestPlay = randomPlay(board);
-                betterPlay = counterWinPlay(board);
-                console.log(betterPlay,"counterwin")
-                if (betterPlay!=="not found") {
-                    bestPlay = betterPlay;
-                }
-                betterPlay = winPlay(board);
-                console.log(betterPlay,"winplay")
-                if (betterPlay!=="not found") {
-                    bestPlay = betterPlay;
-                }
-                console.log(bestPlay,"lastplay")
-                break;
+            case "hard":
 
+            case "medium":
+                if (bestPlay === "not found") {
+                    bestPlay = winPlay(board);
+                }
+                if (bestPlay === "not found") {
+                    bestPlay = counterWinPlay(board);
+                }
+            case "easy":
+                if (bestPlay === "not found") {
+                    bestPlay = randomPlay(board);
+                }
         }
         return bestPlay;
     };
