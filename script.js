@@ -2,14 +2,20 @@ const board = (()=>{
     //ends game
     const endGame = () => {
         announcement.style.display= "flex";
-        if (winner!=="tie"){
+        console.log(winner)
+        if (winner !== "tie"){
             announcement.querySelectorAll('h1')[0].textContent = `${winner} wins!`;
             announcement.className = "win";
+            if (winner === "x") {
+                info.setResult("win");
+            } else {
+                info.setResult("lose");
+            }
         } else {
             announcement.querySelectorAll('h1')[0].textContent = "It's a tie";
             announcement.className = "tie";
+            info.setResult("tie");
         }
-        info.setResult("win");
         stats.refreshStats();
         //reset
         announcement.addEventListener('click',reset);
@@ -229,12 +235,15 @@ const info = (() => {
             case "tie":
                 player1.ties++;
                 player2.ties++;
+                break;
             case "win":
                 player1.wins++;
                 player2.loses++;
+                break;
             case "lose":
                 player1.loses++;
                 player2.wins++;
+                break;
         }
     }
     let gamemode,player1,player2,turn;
@@ -268,6 +277,7 @@ const AI = (() => {
         }
         return (randomNumber+i);
     }
+
 
     return {AIplay}
 })();
