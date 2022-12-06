@@ -274,7 +274,7 @@ const AI = (() => {
         let bestPlay = "not found";
         switch (level) {
             case "hard":
-
+                bestPlay = ultraInstinctPlay(board);
             case "medium":
                 if (bestPlay === "not found") {
                     bestPlay = winPlay(board);
@@ -300,7 +300,7 @@ const AI = (() => {
             }
             if (randomNumber+i>8) {
                 randomNumber = 0;
-                i = 0;
+                i = -1;
             }
             i++;
             if (i===7) {
@@ -370,6 +370,43 @@ const AI = (() => {
                 }
             }
             board[i] = tempCell;
+        }
+        return "not found";
+    }
+    const ultraInstinctPlay = (board) => {
+        //custom cases
+        // #counter 1
+        if (board.join() === [null, null, null, null, 'x', null, null, null, null].join()) {
+            return 0;
+        }
+        if (board.join() === ["o", null, null, null, 'x', null, null, null, "x"].join()) {
+            return 2;
+        }
+        // #counter 2
+        if (board.join() === ["x", null, null, null, null, null, null, null, null].join()
+        || board.join() === [null, null, "x", null, null, null, null, null, null].join()
+        || board.join() === [null, null, null, null, null, null, "x", null, null].join()
+        || board.join() === [null, null, null, null, null, null, null, null, "x"].join()) {
+            return 4;
+        }
+        if (board.join() === ["x", null, null, null, "o", null, null, null, "x"].join()
+        || board.join() === [null, null, "x", null, "o", null, "x", null, null].join()) {
+            return 1;
+        }
+        //counts numbers of each element
+        const counts = {};
+        board.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+        //first move wins
+        if (counts.x === 1 && counts.o === 1) {
+            // #win 1
+            if (board[4] === "o" && 
+            (board.indexOf("x") === 3 || board.indexOf("x") === 7)) {
+                return 2;
+            }
+            if (board[4] === "o" && 
+            (board.indexOf("x") === 1 || board.indexOf("x") === 5)) {
+                return 6;
+            }
         }
         return "not found";
     }
