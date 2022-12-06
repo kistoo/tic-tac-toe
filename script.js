@@ -36,7 +36,6 @@ const board = (()=>{
     const playRound = (cell) => {
         if (info.getInfo().gamemode==="Local") {
             playTurn(cell);
-            console.log(AI.winPlay(getValues()));
             checkCells();
         } else if (info.getInfo().gamemode==="AI") {
             if (turn === "x") {
@@ -257,10 +256,18 @@ const info = (() => {
 
 const AI = (() => {
     const AIplay = (level,board) => {
+        let bestPlay,betterPlay;
         switch (level) {
             case "easy":
-                return randomPlay(board);
+                bestPlay = randomPlay(board);
+                betterPlay = winPlay(board);
+                if (betterPlay!=="not found") {
+                    bestPlay = betterPlay;
+                }
+
         }
+        console.log(bestPlay)
+        return bestPlay;
     };
 
     //AI plays
@@ -284,9 +291,11 @@ const AI = (() => {
     }
     const winPlay = (board) => {
         for(let i=0;i<9;i++) {
-            let tempCell = board[i]
+            let tempCell = board[i];  
             if (board[i] === null) {
                 board[i] = "o";
+                console.log(board)
+                console.log(`this is i = ${i}`)
                 //checks winner
                 switch (true) {
                     //rows
@@ -310,8 +319,9 @@ const AI = (() => {
                         return i;
                 }
             }
-            board[i] = tempCell
-        }  
+            board[i] = tempCell;
+        }
+        return "not found";
     }
 
     return {AIplay,winPlay}
