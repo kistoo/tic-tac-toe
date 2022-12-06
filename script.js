@@ -401,18 +401,21 @@ const AI = (() => {
         const counts = {};
         board.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
         //first move wins
-        if (counts.x === 1 && counts.o === 1) {
-            // #win 1
-            if (board[4] === "o" && 
-            (board.indexOf("x") === 3 || board.indexOf("x") === 7)) {
-                return 2;
-            }
-            if (board[4] === "o" && 
-            (board.indexOf("x") === 1 || board.indexOf("x") === 5)) {
-                return 6;
+        if (counts.x === 1) {
+            if (counts.o === 1) {
+                // #win 1
+                if (board[4] === "o" && 
+                (board.indexOf("x") === 3 || board.indexOf("x") === 7)) {
+                    return 2;
+                }
+                if (board[4] === "o" && 
+                (board.indexOf("x") === 1 || board.indexOf("x") === 5)) {
+                    return 6;
+                }
             }
             // #counter 3
-            if (board[4] === null) {
+            if (board[4] === null && counts.null === 8) {
+                console.log("wtf")
                 return 4;
             }
         }
