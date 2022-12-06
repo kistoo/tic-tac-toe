@@ -2,7 +2,6 @@ const board = (()=>{
     //ends game
     const endGame = () => {
         announcement.style.display= "flex";
-        console.log(winner)
         if (winner !== "tie"){
             announcement.querySelectorAll('h1')[0].textContent = `${winner} wins!`;
             announcement.className = "win";
@@ -37,6 +36,7 @@ const board = (()=>{
     const playRound = (cell) => {
         if (info.getInfo().gamemode==="Local") {
             playTurn(cell);
+            console.log(AI.winPlay(getValues()));
             checkCells();
         } else if (info.getInfo().gamemode==="AI") {
             if (turn === "x") {
@@ -76,29 +76,34 @@ const board = (()=>{
             winner="tie";
         }
         //checks winner
-        for(let i=0;i<3;i++) {
-            //for columns
-            if(values[i]===values[i+3]
-                && values[i+3]===values[i+6]
-                && values[i]!==null) {
-                    winner = values[i];
-                    break;
-            }
-            //for rows
-            if(values[i*3]===values[i*3+1] &&
-                values[i*3+1]===values[i*3+2] &&
-                values[i*3]!==null) {
-                    winner = values[i*3];
-                    break;
-            }
-        }
-        //for diagonals
-        if (((values[0]===values[4]
-            && values[4]===values[8])
-            || (values[2]===values[4]
-            && values[4]===values[6]))
-            && values[4]!==null) {
-                winner = values[4];
+        switch (true) {
+            //rows
+            case (values[0]===values[1] && values[1]===values[2] && (values[0] !== null)):
+                winner = values[0];
+                break;
+            case (values[3]===values[4] && values[4]===values[5] && (values[3] !== null)):
+                winner = values[3];
+                break;
+            case (values[6]===values[7] && values[7]===values[8] && (values[6] !== null)):
+                winner = values[6];
+                break;
+            //columns
+            case (values[0]===values[3] && values[3]===values[6] && (values[0] !== null)):
+                winner = values[0];
+                break;
+            case (values[1]===values[4] && values[4]===values[7] && (values[1] !== null)):
+                winner = values[1];
+                break;
+            case (values[2]===values[5] && values[5]===values[8] && (values[2] !== null)):
+                winner = values[0];
+                break;
+            //diagonals
+            case (values[0]===values[4] && values[4]===values[8] && (values[0] !== null)):
+                winner = values[0];
+                break;
+            case (values[2]===values[4] && values[4]===values[6] && (values[2] !== null)):
+                winner = values[2];
+                break;
         }
         //endgame if there is a winner
         if (winner!=="") {
@@ -277,9 +282,39 @@ const AI = (() => {
         }
         return (randomNumber+i);
     }
+    const winPlay = (board) => {
+        for(let i=0;i<9;i++) {
+            let tempCell = board[i]
+            if (board[i] === null) {
+                board[i] = "o";
+                //checks winner
+                switch (true) {
+                    //rows
+                    case (board[0]===board[1] && board[1]===board[2] && (board[0] === "o")):
+                        return i;
+                    case (board[3]===board[4] && board[4]===board[5] && (board[3] === "o")):
+                        return i;
+                    case (board[6]===board[7] && board[7]===board[8] && (board[6] === "o")):
+                        return i;
+                    //columns
+                    case (board[0]===board[3] && board[3]===board[6] && (board[0] === "o")):
+                        return i;
+                    case (board[1]===board[4] && board[4]===board[7] && (board[1] === "o")):
+                        return i;
+                    case (board[2]===board[5] && board[5]===board[8] && (board[2] === "o")):
+                        return i;
+                    //diagonals
+                    case (board[0]===board[4] && board[4]===board[8] && (board[0] === "o")):
+                        return i;
+                    case (board[2]===board[4] && board[4]===board[6] && (board[2] === "o")):
+                        return i;
+                }
+            }
+            board[i] = tempCell
+        }  
+    }
 
-
-    return {AIplay}
+    return {AIplay,winPlay}
 })();
 
 const playerFactory = (name,team="o") => {
