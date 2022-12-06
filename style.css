@@ -120,7 +120,7 @@ label {
 }
 
 .player-2, .difficulty {
-    display: flex;/*flex*/
+    display: none;/*flex*/
     flex-direction: column;
     gap: 10px;
 }
