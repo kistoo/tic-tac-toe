@@ -44,7 +44,7 @@ const board = (()=>{
                 if (playTurn(cell)) {
                     let AIturn = checkCells();
                     if (AIturn) {
-                        playTurn(cells[AI.AIplay("easy",getValues())]);
+                        playTurn(cells[AI.AIplay("medium",getValues())]);
                         checkCells();
                     }   
                 }        
@@ -262,6 +262,9 @@ const AI = (() => {
         switch (level) {
             case "easy":
                 bestPlay = randomPlay(board);
+                break;
+            case "medium":
+                bestPlay = randomPlay(board);
                 betterPlay = counterWinPlay(board);
                 if (betterPlay!=="not found") {
                     bestPlay = betterPlay;
@@ -270,6 +273,7 @@ const AI = (() => {
                 if (betterPlay!=="not found") {
                     bestPlay = betterPlay;
                 }
+                break;
 
         }
         return bestPlay;
