@@ -159,19 +159,25 @@ const form = (() => {
         const game = document.getElementById('game');
         form.style.display="none";
         game.style.display="flex";
+        document.getElementsByClassName('player-2')[1].style.display = "flex";
+        document.getElementsByClassName('player-2')[2].style.display = "flex";
     }
     const collectData = () => {
         const gamemode = select.value;
         let player1 = inputs[0].value;
+        let player2;
         if (player1 === "") {
             player1 = "Player 1";
         }
-        let player2 = "AI"
-        if (gamemode === "Local"){
+        if (gamemode === "Local") {
             player2 = inputs[1].value;
             if (player2 === "") {
                 player2 = "Player 2";
             }
+        } else if (gamemode === "AI") {
+            player2 = "AI ";
+            const difficultyChose = document.getElementById('difficulty').value;
+            player2 += `${difficultyChose}`;
         }
         
         return {gamemode,player1,player2}
