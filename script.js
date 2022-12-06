@@ -7,8 +7,10 @@ const board = (()=>{
             announcement.className = "win";
             if (winner === "x") {
                 info.setResult("win");
+                console.log("HUMAN WIN")
             } else {
                 info.setResult("lose");
+                console.log("AI WIN");
             }
         } else {
             announcement.querySelectorAll('h1')[0].textContent = "It's a tie";
@@ -94,7 +96,7 @@ const board = (()=>{
                 winner = values[1];
                 break;
             case (values[2]===values[5] && values[5]===values[8] && (values[2] !== null)):
-                winner = values[0];
+                winner = values[2];
                 break;
             //diagonals
             case (values[0]===values[4] && values[4]===values[8] && (values[0] !== null)):
@@ -266,7 +268,6 @@ const AI = (() => {
                 }
 
         }
-        console.log(bestPlay)
         return bestPlay;
     };
 
@@ -294,8 +295,6 @@ const AI = (() => {
             let tempCell = board[i];  
             if (board[i] === null) {
                 board[i] = "o";
-                console.log(board)
-                console.log(`this is i = ${i}`)
                 //checks winner
                 switch (true) {
                     //rows
