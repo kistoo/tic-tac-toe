@@ -178,10 +178,16 @@ const form = (() => {
     }
     const checkMode = () => {
         const player2Name = document.getElementsByClassName('player-2')[0];
+        const difficulty = document.getElementsByClassName('difficulty')[0];
         if (select.value==="Local") {
             player2Name.style.display = "flex";
         } else {
             player2Name.style.display = "none";
+        }
+        if (select.value==="AI") {
+            difficulty.style.display = "flex";
+        } else {
+            difficulty.style.display = "none";
         }
     }
 
