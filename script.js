@@ -9,6 +9,10 @@ const board = (()=>{
                 info.setResult("win");
             } else {
                 info.setResult("lose");
+                if (info.getInfo().gamemode === "AI") {
+                    announcement.className = "lose";
+                    announcement.querySelectorAll('h1')[0].textContent = "You lose";
+                }
             }
         } else {
             announcement.querySelectorAll('h1')[0].textContent = "It's a tie";
